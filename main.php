@@ -1,3 +1,8 @@
+<?php
+	$con=mysqli_connect("localhost","root","tester11","yammcur");
+	$qry = "SELECT budget, users.yammer_email, users.id_yammer from trip INNER JOIN `trip_users` ON trip.id = trip_users.id_trip INNER JOIN users ON trip_users.id_user = users.id_yammer where `id_trip` = 1";
+	$res = mysqli_query($con, $qry);
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -70,26 +75,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php $count = 0; ?>
+                                    <?php $min  = 2700;  ?>
+                                    <?php while ($row = mysqli_fetch_assoc($res)) { ?>
+                                    <?php $budget  = $row['budget'];  ?>
+                                    
                                         <tr>
-                                            <td>1</td>
-                                            <td>goran@devlabs.bg</td>
-                                            <td>200 / 600</td>
+                                            <td><?= ++$count ?></td>
+                                            <td><?= $row['yammer_email']; ?></td>
+                                            <td><?=($min - 1900)*$count?> / <?=$budget?></td>
                                             <td>
-                                                <button class="btn btn-primary" onclick="yammerHelper.praiseUser('1517466377','This guy saved $3000 during his business trip and he is awarded with this amount. Add a question for some expert advice.')">Award</button>
+                                               <?php if($count == 1) : ?>
+                                                    <button class="btn btn-primary" onclick="yammerHelper.praiseUser('<?= $row['id_yammer']; ?>','This guy saved $<?= ($budget - ( $min - 100)) ?> during his business trip and he is awarded with this amount. Add a question for some expert advice.')">Award</button>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>silvi@devlabs.bg</td>
-                                            <td>300 / 600</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>jordan@devlabs.bg</td>
-                                            <td>500 / 600</td>
-                                            <td></td>
-                                        </tr>
+
+                                        <?php } ?>
+                                        
                                     </tbody>
                                 </table>
                             </div>

@@ -1,5 +1,4 @@
 <?php
-header ("Content-Type:text/xml");
 
 $ch = curl_init();
 
@@ -17,7 +16,23 @@ $server_output = curl_exec ($ch);
 
 curl_close ($ch);
 
-var_dump($server_output);
+$data = new SimpleXMLElement($server_output);
+$data = (array) $data;
+
+echo $data['TotalApprovedAmount'] . $data['CurrencyCode'];
+
+$expenseEntriesList = (array) $data['ExpenseEntriesList'];
+foreach($expenseEntriesList['ExpenseEntry'] as $expenseEntry){
+	$expense = (array) $expenseEntry;
+	//var_dump($expense);
+	$result[] = array(
+		'ReportEntryID' => $expense['ReportEntryID'],
+		'TransactionCurrencyName' => $expense['TransactionCurrencyName'],
+		'ApprovedAmount' => $expense['ApprovedAmount']
+	);
+}
+echo "<pre>";
+var_dump($result);
 
 ?>
 

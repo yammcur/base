@@ -98,7 +98,7 @@ var yammerHelper = {
             },
             success: function (users) {
               $.each(users,function(index, user){
-                    $("#ymr_users").append('<div class="input-group margin-top20"><span class="input-group-addon"><input type="hidden" name="id[]" value="'+user.id+'" /><input type="hidden" name="email[]" value="'+user.contact.email_addresses[0].address+'" /><input name="active[]" value="0" type="hidden"><input name="active[]" value="1" type="checkbox"></span><input type="text" value="'+user.contact.email_addresses[0].address+'" disabled class="form-control"></div>');
+                    $("#ymr_users").append('<div class="input-group margin-top20"><span class="input-group-addon"><input type="hidden" name="dummy[]" value="'+user.id+'" /><input type="hidden" name="id[]" value="'+user.id+'" /><input type="hidden" name="email[]" value="'+user.contact.email_addresses[0].address+'" /><input name="active['+user.id+']" value="1" type="checkbox"></span><input type="text" value="'+user.contact.email_addresses[0].address+'" disabled class="form-control"></div>');
               });
             },
             error: function (user) {
