@@ -118,7 +118,6 @@
                     yammerHelper.getUsersInNetwork();
                 }
             );
-
             $("#add_trip_heading").on("click", function(){
                 $("#add_trip_body").slideToggle();
             });
